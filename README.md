@@ -1,8 +1,12 @@
  
 #  MLTBdx pipeline
+MLTBdx is a reproducible Nextflow (DSL2) pipeline designed to classify tuberculosis (TB) disease  and treatment status using a modified implementation of SIAMCAT. The pipeline also ranks microbiota features of importance at the genus level, enabling identification of taxa that influence classification performance. From these, potential functional roles in disease onset, progression, and recovery can be inferred.
+MLTBdx employs two key optimization steps:
+  * The normalization method
+  * The genus prevalence threshold (as described in **[SIAMCAT](https://siamcat.embl.de/index.html)**).
 
-A reproducible Nextflow (DSL2) pipeline for building microbiome-based classifiers with  **[SIAMCAT](https://siamcat.embl.de/index.html)**
-, evaluating models, selecting the best by metric, validating on an external dataset, and producing SHAP-based explanations.
+It systematically explores this parameter space to rank the best-performing model based on conventional machine learning metrics such as Matthews Correlation Coefficient (MCC). For interpretability, SHapley Additive exPlanations (**[SHAP](https://shap.readthedocs.io/en/latest/)**) are incorporated. Approximately 156 models are trained and evaluated to generate a comprehensive dataset from which the top-ranked model is selected.
+This represents the first microbial-informed machine learning pipeline developed to harness clinical metagenomics for TB diagnosis and potentially prognosis. We acknowledge that this is an early-stage proof of concept and should be interpreted as a foundational step toward this broader goal.
 
 # Features
 * End-to-end: preprocessing -> Feature Filtering -> Model training/evaluation -> best/top 2 selection -> external validation -> SHAP plots. 
