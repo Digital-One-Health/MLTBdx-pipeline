@@ -1,0 +1,113 @@
+#!/usr/bin/env Rscript
+
+suppressPackageStartupMessages({
+  if (!requireNamespace("optparse", quietly = TRUE))
+    install.packages("optparse", repos="https://cloud.r-project.org")
+  library(optparse)
+  if (!requireNamespace("SIAMCAT", quietly = TRUE))
+    stop("Please install SIAMCAT first (BiocManager::install('SIAMCAT'))")
+  library(SIAMCAT)
+})
+
+opt <- parse_args(OptionParser(option_list = list(
+  make_option("--features",     type="character", help="Features CSV"),
+  make_option("--meta",         type="character", help="Meta CSV"),
+  make_option("--taxa_col",     type="character", default="Genus",
+              help="FEATURES taxa/feature ID column (name or 1-based index). Default: Genus"),
+  make_option("--meta_id_col",  type="character", default="SampleID",
+              help="META sample ID column name. Default: SampleID"),
+  make_option("--label_column", type="character", default="TB_treatment",
+              help="META label column. Default: TB_treatment"),
+  make_option("--case_label",   type="character", default="YES",
+              help="Positive class label. Default: YES"),
+  make_option("--out",          type="character", default="sc_base.rds",
+              help="Output RDS path. Default: sc_base.rds")
+)))
+stopifnot(!is.null(opt$features), !is.null(opt$meta))
+
+msg <- function(...) cat(sprintf(...), "\n")
+
+# -------- Read inputs --------
+feature <- read.csv(opt$features, check.names = FALSE, stringsAsFactors = FALSE)
+meta    <- read.csv(opt$meta,     check.names = FALSE, stringsAsFactors = FALSE)
+
+# Trim headers (avoids hidden spaces causing mis-matches)
+colnames(feature) <- trimws(colnames(feature))
+colnames(meta)    <- trimws(colnames(meta))
+
+# -------- FEATURES: use --taxa_col, drop it --------
+if (grepl("^[0-9]+$", opt$taxa_col)) {
+  id_idx <- as.integer(opt$taxa_col)
+  if (id_idx < 1 || id_idx > ncol(feature)) stop("taxa_col index out of range.")
+  taxa_name <- colnames(feature)[id_idx]
+} else {
+  id_idx <- match(opt$taxa_col, colnames(feature))
+  if (is.na(id_idx)) stop(sprintf("taxa_col '%s' not found in FEATURES.", opt$taxa_col))
+  taxa_name <- opt$taxa_col
+}
+msg("Using FEATURES taxa column: %s (index %d)", taxa_name, id_idx)
+
+taxa_ids <- trimws(as.character(feature[[id_idx]]))
+empty <- which(!nzchar(taxa_ids) | is.na(taxa_ids))
+if (length(empty)) taxa_ids[empty] <- paste0("feat_", empty)
+rownames(feature) <- make.unique(taxa_ids)
+
+feature <- feature[, -id_idx, drop = FALSE]
+
+# Coerce to numeric & replace NAs
+feature[] <- lapply(feature, function(x) if (is.numeric(x)) x else suppressWarnings(as.numeric(x)))
+feature[is.na(feature)] <- 0
+
+# Collapse duplicate taxa (SIAMCAT requires unique feature IDs)
+if (anyDuplicated(rownames(feature))) {
+  msg("Found duplicated taxa; collapsing by SUM across samples.")
+  feature <- rowsum(as.matrix(feature), group = rownames(feature))
+  feature <- as.data.frame(feature, check.names = FALSE)
+}
+
+# -------- META: set rownames from --meta_id_col, drop it (robust) --------
+id_idx_meta <- match(opt$meta_id_col, colnames(meta))
+if (is.na(id_idx_meta))
+  stop(sprintf("META id column '%s' not found. Available: %s",
+               opt$meta_id_col, paste(colnames(meta), collapse=", ")))
+
+rownames(meta) <- trimws(as.character(meta[[id_idx_meta]]))
+# Drop ONLY that column; keep data.frame shape even if 0 remaining cols
+meta <- meta[, setdiff(seq_len(ncol(meta)), id_idx_meta), drop = FALSE]
+
+# -------- Align samples --------
+# Trim sample IDs to avoid whitespace mismatches
+colnames(feature) <- trimws(colnames(feature))
+rownames(meta)    <- trimws(rownames(meta))
+
+common <- intersect(colnames(feature), rownames(meta))
+if (!length(common)) stop("No overlapping sample IDs between FEATURES (columns) and META (rownames).")
+if (length(common) < ncol(feature))
+  msg("Dropping %d feature samples not in META.", ncol(feature) - length(common))
+if (length(common) < nrow(meta))
+  msg("Dropping %d META rows not in FEATURES.", nrow(meta) - length(common))
+
+feature <- feature[, common, drop = FALSE]
+meta    <- meta[common, , drop = FALSE]
+
+# -------- Per-sample relative abundance (columns sum to 1) --------
+M  <- as.matrix(feature)                 # features x samples
+cs <- colSums(M); cs[cs == 0] <- 1
+Mrel <- sweep(M, 2, cs, "/")
+Mrel[is.na(Mrel)] <- 0
+
+# -------- Labels & SIAMCAT --------
+if (!opt$label_column %in% colnames(meta))
+  stop(sprintf("Label column '%s' not in META. Available: %s",
+               opt$label_column, paste(colnames(meta), collapse=", ")))
+
+label.meta <- create.label(meta = meta,
+                           label = opt$label_column,
+                           case  = opt$case_label)
+
+# SIAMCAT expects features x samples
+sc.obj <- siamcat(feat = Mrel, label = label.meta, meta = meta)
+
+saveRDS(sc.obj, file = opt$out)
+msg("Saved SIAMCAT object to %s", opt$out)
+

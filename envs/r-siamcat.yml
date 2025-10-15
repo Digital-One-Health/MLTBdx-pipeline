@@ -1,0 +1,62 @@
+name: r-siamcat
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bioconductor-biomaRt
+  - bioconductor-biomformat
+  - bioconductor-biomformat
+  - bioconductor-Biostrings
+  - bioconductor-BSgenome
+  - bioconductor-GenomeInfoDb
+  - bioconductor-GenomicAlignments
+  - bioconductor-GenomicFeatures
+  - bioconductor-phyloseq
+  - bioconductor-phyloseq
+  - bioconductor-Rsamtools
+  - bioconductor-rtracklayer
+  - bioconductor-XVector
+  - bioconductor-SIAMCAT
+  - conda-forge::icu
+  - git
+  - libcurl
+  - libxml2
+  - openssl
+  - r-base=4.3.*
+  - r-biocmanager
+  - r-data.table
+  - r-devtools
+  - r-dplyr
+  - r-fastshap
+  - r-ggplot2
+  - r-glmnet
+  - r-gridExtra
+  - r-igraph
+  - r-lme4
+  - r-liblinear
+  - r-mass
+  - r-matrix
+  - r-mgcv
+  - r-mirai
+  - r-mlr3
+  - r-mlr3learners
+  - r-ranger
+  - r-nanonext
+  - r-nanonext
+  - r-nloptr
+  - r-optparse
+  - r-peakram
+  - r-pROC
+  - r-ranger
+  - r-randomforest
+  - r-rcurl
+  - r-readr
+  - r-readr
+  - r-remotes
+  - r-restfulr
+  - r-shapviz
+  - r-tidyr
+  - r-XML
+  - zlib
+
+
