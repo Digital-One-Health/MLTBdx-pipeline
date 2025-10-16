@@ -198,7 +198,7 @@ Evaluation Parameters
         --shap_nsim 100 --shap_sample 200
 
 
-# Reference
+# References
 
 **[1]:** Wirbel, J., Zych, K., Essex, M. et al. Microbiome meta-analysis and cross-disease comparison enabled by the SIAMCAT machine learning toolbox. Genome Biol 22, 93 (2021). https://doi.org/10.1186/s13059-021-02306-1
 
