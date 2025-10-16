@@ -6,10 +6,19 @@
 MLTBdx is a reproducible Nextflow (DSL2) pipeline designed to classify tuberculosis (TB) disease  and treatment status using a modified implementation of SIAMCAT. The pipeline also ranks microbiota features of importance at the genus level, enabling identification of taxa that influence classification performance. From these, potential functional roles in disease onset, progression, and recovery can be inferred.
 MLTBdx employs two key optimization steps:
   * The normalization method
-  * The genus prevalence threshold (as described in **[SIAMCAT](https://siamcat.embl.de/index.html)**).
+  * The genus prevalence threshold (as described in **[SIAMCAT](https://siamcat.embl.de/index.html)**) [1].
 
 It systematically explores this parameter space to rank the best-performing model based on conventional machine learning metrics such as Matthews Correlation Coefficient (MCC). For interpretability, SHapley Additive exPlanations (**[SHAP](https://shap.readthedocs.io/en/latest/)**) are incorporated. Approximately 156 models are trained and evaluated to generate a comprehensive dataset from which the top-ranked model is selected.
 This represents the first microbial-informed machine learning pipeline developed to harness clinical metagenomics for TB diagnosis and potentially prognosis. We acknowledge that this is an early-stage proof of concept and should be interpreted as a foundational step toward this broader goal.
+
+# Requirements
+  - Nextflow (DSL2)
+  - One of: 
+         * Conda/Mamba (recommended)
+
+
+# Data Source
+The pipe uses data from a global systematic review, meta-analysis, and amplicon-based metagenomic meta-analysis [2].
 
 # Features
 * End-to-end: preprocessing -> Feature Filtering -> Model training/evaluation -> best/top 2 selection -> external validation -> SHAP plots. 
@@ -18,11 +27,6 @@ This represents the first microbial-informed machine learning pipeline developed
 * Friendly models: ridge, ridge_ll, lasso, lasso_ll, enet, rf
 * Config-first: defaults live in **nextflow.config**
 
-# Requirements
-  - Nextflow (DSL2)
-  - One of: 
-         * Conda/Mamba (recommended)
-         
 
 # Inputs
 1. **Features CSV**
@@ -196,7 +200,7 @@ Evaluation Parameters
 
 # Reference
 
-  Wirbel, J., Zych, K., Essex, M. et al. Microbiome meta-analysis
-  and cross-disease comparison enabled by the SIAMCAT machine
-  learning toolbox. Genome Biol 22, 93 (2021).
-  https://doi.org/10.1186/s13059-021-02306-1
+**[1]:** Wirbel, J., Zych, K., Essex, M. et al. Microbiome meta-analysis and cross-disease comparison enabled by the SIAMCAT machine learning toolbox. Genome Biol 22, 93 (2021). https://doi.org/10.1186/s13059-021-02306-1
+
+**[2]:**  Mbabazi, M., Kateete, D. P., Nakazzi, F., Wandera, J. N., Mutesi, N., Ocan, M., Biraro, I. A., Abaasa, A., Johnson, W. E., & Wee, B. (2025). The impact of tuberculosis and its treatment on the lung and gut microbiota: A global systematic review, meta-analysis, and amplicon-based metagenomic meta-analysis. medRxiv, 2025–08.
+
