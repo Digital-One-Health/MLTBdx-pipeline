@@ -1,5 +1,8 @@
  
 #  MLTBdx pipeline
+
+![alt text](data/Images/MLTBdx.png)
+
 MLTBdx is a reproducible Nextflow (DSL2) pipeline designed to classify tuberculosis (TB) disease  and treatment status using a modified implementation of SIAMCAT. The pipeline also ranks microbiota features of importance at the genus level, enabling identification of taxa that influence classification performance. From these, potential functional roles in disease onset, progression, and recovery can be inferred.
 MLTBdx employs two key optimization steps:
   * The normalization method
