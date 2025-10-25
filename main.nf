@@ -248,6 +248,7 @@ process SELECT_TOP1_BY_METRIC {
 
 process SELECT_TOP2_BY_METRIC {
   tag "select-top2-${SEL_METRIC}"
+  
   publishDir "${OUTDIR}/top2", mode:'copy'
 
   input:
@@ -257,6 +258,11 @@ process SELECT_TOP2_BY_METRIC {
 
   output:
     path "top2.tsv"
+
+  errorStrategy { 
+    // Ignore only Rscript exit code 1 (often minor warnings)
+    task.exitStatus == 1 ? 'ignore' : 'terminate'
+  }
 
   script:
   """
@@ -356,7 +362,7 @@ process VALIDATE_BEST {
 process SHAP_FROM_SIAMCAT_TOP2 {
   tag "shap-top2"
   publishDir "${OUTDIR}/shap_best", mode: 'copy', overwrite: true
-  time '2h'
+  time '6h'
   errorStrategy 'terminate'
 
   input:

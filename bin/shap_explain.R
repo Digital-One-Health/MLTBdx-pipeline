@@ -34,7 +34,7 @@ aliases <- list(
   randomforest="randomForest", rf="randomForest", random_forest="randomForest",
   ridgell="ridge_ll", ridgeii="ridge_ll", ridge_ll="ridge_ll", ridge_ii="ridge_ll",
   lassoll="lasso_ll", lasso="lasso_ll", lasso_ll="lasso_ll",
-  enetll="enet_ll", enet="enet_ll", elasticnet="enet_ll", elasticnetll="enet_ll"
+  enetll="enet", enet="enet", elasticnet="enet", elasticnetll="enet"
 )
 opt$method <- aliases[[canon(opt$method)]] %||% opt$method
 

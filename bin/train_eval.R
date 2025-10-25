@@ -132,6 +132,7 @@ if (has_pos && has_neg && nonconst) {
       TPR   = roc.obj$sensitivities,
       model = opt$model,
       filter = opt$cutoff,
+      normalization = opt$norm,
       stringsAsFactors = FALSE
     )
     fwrite(aucroc, opt$auroc_csv, append = file.exists(opt$auroc_csv))
@@ -142,12 +143,11 @@ if (has_pos && has_neg && nonconst) {
   msg("Skipping AUROC curve (classes or scores degenerate).")
 }
 
-# ---------- plots (best-effort) ----------
+# ---------- plots (Handling all possible errors) ----------
+
 try(suppressWarnings(model.evaluation.plot(sc1, fn.plot = opt$eval_pdf)), silent=TRUE)
 if (opt$model == 'randomForest'){
-#try(suppressWarnings(model.interpretation.plot(sc1, fn.plot = opt$interp_pdf,
-#                                               consens.thres = 0.5, limits = c(-3,3),
-#                                               heatmap.type='zscore')), silent=FALSE)
+
 tryCatch({
     model.interpretation.plot(
       sc1, fn.plot = opt$interp_pdf,
@@ -168,9 +168,25 @@ tryCatch({
 
 
 }else {
-    try(suppressWarnings(model.interpretation.plot(sc1, fn.plot = opt$interp_pdf,
-                                               consens.thres = 0.5 , limits = c(-3,3),
-                                               heatmap.type='zscore')), silent=FALSE)
+
+    tryCatch({
+    model.interpretation.plot(
+      sc1, fn.plot = opt$interp_pdf,
+      consens.thres = 0.5,
+      limits = c(-3, 3), heatmap.type = "zscore"
+    )
+    }, error = function(e) {
+    message(sprintf("[interp] consens.thres=%s failed (%s). Retrying with 0.", opt$rf_consens_thresh, e$message))
+    try(
+      suppressWarnings(model.interpretation.plot(
+        sc1, fn.plot = opt$interp_pdf,
+        consens.thres = 0,
+        limits = c(-3, 3), heatmap.type = "zscore"
+      )),
+      silent = TRUE
+    )
+  })
+
 }
 
 
