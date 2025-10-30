@@ -19,6 +19,7 @@ This represents the first microbial-informed machine learning pipeline developed
 
 # Data Source
 The pipe uses data from a global systematic review, meta-analysis, and amplicon-based metagenomic meta-analysis [2].
+![alt text](data/Images/MLTBdx_datasources.png)
 
 # Features
 * End-to-end: preprocessing -> Feature Filtering -> Model training/evaluation -> best/top 2 selection -> external validation -> SHAP plots. 
@@ -196,6 +197,14 @@ Evaluation Parameters
         --models 'ridge,lasso,enet' \
         --sel_metric mcc \
         --shap_nsim 100 --shap_sample 200
+
+# Acknowledgments
+
+1. Adrian Muwonge
+2. David Patrick Katete
+3. Herbert Agasi
+4. Monica Mbabazi
+5. Nilay Peker
 
 
 # References
