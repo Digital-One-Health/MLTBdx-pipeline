@@ -82,6 +82,20 @@ Loads the best model and evaluates it on the validation set.
 ### SHAP_FROM_SIAMCAT_TOP2
 Produces SHAP summaries/metrics for the top-2 models.
 
+# Results
+
+## Association
+![alt text](data/Images/association.png)
+## ROC curve
+![alt text](data/Images/ROC.png)
+## Precision curve
+![alt text](data/Images/Precision.png)
+## Interpretation plot
+![alt text](data/Images/interpretation.png)
+## Area Under the receiver Opertator Curves.
+![alt text](data/Images/auroc.png)
+## Model utility assesment 
+![alt text](data/Images/modelUtility.png)
 
 # Quickstart
 ## update the nextflow.config file 
