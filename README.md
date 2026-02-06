@@ -126,12 +126,11 @@ Evaluation Parameters
           norms   = 'rank.unit,rank.std,log.std,log.unit,log.clr,std'
           cutoffs = '0.005,0.0001,0.0005,0.01'
           models  = 'randomForest,lasso,lasso_ll,enet,ridge,ridge_ll'
-          //models = 'ridge'
-          // selection metric
+          // Choose appropriate metric for evaluation
           sel_metric = 'mcc'
 
           // labels / IDs
-          label_column = 'Disease_Status'   // prefer this key
+          label_column = 'Disease_Status'   // Update accordingly
           case_label   = 'TB_case'
           taxa_col     = 'Genus'
           meta_id_col  = 'SampleID'
@@ -148,7 +147,7 @@ Evaluation Parameters
           // validation inputs (optional; can be null if unused)
           val_features    = 'data/Validation_Features_Sample.csv'
           val_meta        = 'data/Validation_Metadata_Sample.csv'
-          label_col       = 'Disease_Status'   // keep ONLY if some code explicitly expects this name
+          label_col       = 'Disease_Status'   // please update accordingly 
           val_feat_id_col = 'Genus'
           }
 
