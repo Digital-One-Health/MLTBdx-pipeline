@@ -32,6 +32,7 @@ dependencies:
   - r-glmnet
   - r-gridExtra
   - r-igraph
+  - r-imbalance
   - r-lme4
   - r-liblinear
   - r-mass
@@ -57,6 +58,7 @@ dependencies:
   - r-shapviz
   - r-tidyr
   - r-XML
+  - r-xgboost
   - zlib
 
 

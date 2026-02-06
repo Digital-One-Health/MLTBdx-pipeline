@@ -29,7 +29,7 @@ stopifnot(!is.null(opt$features), !is.null(opt$meta))
 
 msg <- function(...) cat(sprintf(...), "\n")
 
-# -------- Read inputs --------
+# Read inputs
 feature <- read.csv(opt$features, check.names = FALSE, stringsAsFactors = FALSE)
 meta    <- read.csv(opt$meta,     check.names = FALSE, stringsAsFactors = FALSE)
 
@@ -37,7 +37,7 @@ meta    <- read.csv(opt$meta,     check.names = FALSE, stringsAsFactors = FALSE)
 colnames(feature) <- trimws(colnames(feature))
 colnames(meta)    <- trimws(colnames(meta))
 
-# -------- FEATURES: use --taxa_col, drop it --------
+# FEATURES: use --taxa_col, drop it
 if (grepl("^[0-9]+$", opt$taxa_col)) {
   id_idx <- as.integer(opt$taxa_col)
   if (id_idx < 1 || id_idx > ncol(feature)) stop("taxa_col index out of range.")
@@ -67,7 +67,7 @@ if (anyDuplicated(rownames(feature))) {
   feature <- as.data.frame(feature, check.names = FALSE)
 }
 
-# -------- META: set rownames from --meta_id_col, drop it --------
+# META: set rownames from --meta_id_col, drop it
 id_idx_meta <- match(opt$meta_id_col, colnames(meta))
 if (is.na(id_idx_meta))
   stop(sprintf("META id column '%s' not found. Available: %s",
@@ -79,8 +79,7 @@ rownames(meta) <- sample_ids
 # Drop the ID column; keep frame even if empty
 meta <- meta[, setdiff(seq_len(ncol(meta)), id_idx_meta), drop = FALSE]
 
-# -------- Optional: restrict META to selected covariates --------
-# Always ensure label column is present
+# restrict META to selected covariates 
 if (!opt$label_column %in% colnames(meta)) {
   stop(sprintf("Label column '%s' not in META (after removing ID). Available: %s",
                opt$label_column, paste(colnames(meta), collapse=", ")))
@@ -89,7 +88,7 @@ if (!opt$label_column %in% colnames(meta)) {
 if (!is.null(opt$covars)) {
   requested <- unique(trimws(unlist(strsplit(opt$covars, ","))))
   requested <- requested[nzchar(requested)]
-  # Remove label if user listed it; we will add it explicitly to keep order clear
+  # Remove label if user listed it
   requested <- setdiff(requested, opt$label_column)
 
   missing <- setdiff(requested, colnames(meta))
@@ -103,14 +102,13 @@ if (!is.null(opt$covars)) {
   msg("Keeping %d META covariate(s): %s",
       length(keep_covars), if (length(keep_covars)) paste(keep_covars, collapse=", ") else "(none)")
 } else {
-  # Keep all columns (except ID, which we dropped), i.e., label + any other covariates
-  # Ensure label column is first (optional, for readability)
+  # Keep all columns (except ID, which we dropped)
   others <- setdiff(colnames(meta), opt$label_column)
   meta <- meta[, c(opt$label_column, others), drop = FALSE]
   msg("Keeping ALL META columns as covariates (except ID). Count: %d", ncol(meta)-1)
 }
 
-# -------- Align samples --------
+# Align samples
 colnames(feature) <- trimws(colnames(feature))
 rownames(meta)    <- trimws(rownames(meta))
 
@@ -124,13 +122,13 @@ if (length(common) < nrow(meta))
 feature <- feature[, common, drop = FALSE]
 meta    <- meta[common, , drop = FALSE]
 
-# -------- Per-sample relative abundance (columns sum to 1) --------
-M  <- as.matrix(feature)                 # features x samples
+# Per-sample relative abundance
+M  <- as.matrix(feature)        
 cs <- colSums(M); cs[cs == 0] <- 1
 Mrel <- sweep(M, 2, cs, "/")
 Mrel[is.na(Mrel)] <- 0
 
-# -------- Labels & SIAMCAT --------
+# Labels & SIAMCAT 
 label.meta <- create.label(meta = meta,
                            label = opt$label_column,
                            case  = opt$case_label)

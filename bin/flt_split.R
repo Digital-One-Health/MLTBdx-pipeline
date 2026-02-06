@@ -31,11 +31,10 @@ association.plot(sc, max.show=50, sort.by='fc', panels=c('fc','prevalence','auro
 dev.off()
 
 # Plotting confounders
-# We let the function handle the PDF device opening/closing by passing the filename.
 check.confounders(sc, meta.in=NULL, feature.type='filtered', fn.plot=opt$conf_pdf)
 
 
-# Normalization params mapping (mirrors your R script)
+# Normalization params mapping
 norm_map <- list(
     'log.unit'  = list(norm.method='log.unit',  norm.param=list(log.n0=1e-05, n.p=1, norm.margin=1)),
     'log.std'   = list(norm.method='log.std',   norm.param=list(log.n0=1e-05, sd.min.q=.1)),

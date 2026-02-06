@@ -225,5 +225,4 @@ Evaluation Parameters
 
 **[1]:** Wirbel, J., Zych, K., Essex, M. et al. Microbiome meta-analysis and cross-disease comparison enabled by the SIAMCAT machine learning toolbox. Genome Biol 22, 93 (2021). https://doi.org/10.1186/s13059-021-02306-1
 
-**[2]:**  Mbabazi, M., Kateete, D. P., Nakazzi, F., Wandera, J. N., Mutesi, N., Ocan, M., Biraro, I. A., Abaasa, A., Johnson, W. E., & Wee, B. (2025). The impact of tuberculosis and its treatment on the lung and gut microbiota: A global systematic review, meta-analysis, and amplicon-based metagenomic meta-analysis. medRxiv, 2025–08.
-
+**[2]** Mbabazi, M., Kateete, D. P., Nakazzi, F., Wandera, J. N., Mutesi, N., Ocan, M., Biraro, I.A., Abaasa, A., Johnson, W. E., Wee, B., & Muwonge, A. (2025). The impact of tuberculosis and its treatment on the lung and gut microbiota: a global systematic review, meta-analysis, and amplicon-based metagenomic meta-analysis. _BMC infectious diseases_, 26(1), 219. https://doi.org/10.1186/s12879-025-12369-1

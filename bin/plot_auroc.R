@@ -40,7 +40,7 @@ read_one <- function(f) {
 
 au <- bind_rows(lapply(files, read_one))
 
-# Make sure types are right
+# Ensuring the right datatypes
 au <- au %>%
   mutate(
     model  = as.factor(model),
@@ -48,7 +48,7 @@ au <- au %>%
     normalization = as.factor(normalization)
   )
 
-# Helper: nice ROC plot for a given data frame
+# Function nice ROC plot for a given data frame
 plot_roc <- function(df, title_suffix = "") {
   df <- df %>% arrange(model, filter, FPR, TPR)
 
@@ -68,7 +68,7 @@ plot_roc <- function(df, title_suffix = "") {
 p_all <- plot_roc(au, " — All")
 ggsave(file.path(opt$out, "auroc_ALL.pdf"), plot = p_all, width = 11, height = 7)
 
-# 2) One PDF per normalization level (works even if only "merged")
+# 2) One PDF per normalization level
 for (nm in levels(au$normalization)) {
   df <- au %>% filter(normalization == nm)
   if (nrow(df) == 0) next
