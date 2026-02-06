@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
   library(SIAMCAT)
 })
 
-# ---------- CLI ----------
+# command line options
 opt_list <- list(
   make_option("--model_rds",     type="character", help="Path to trained SIAMCAT RDS (from TRAIN_EVAL)"),
   make_option("--features",      type="character", help="Validation features CSV"),
@@ -41,7 +41,7 @@ variant <- if (grepl("(?i)mwmote", tail(strsplit(opt$model_rds, "/")[[1]], 1)) |
 message(sprintf("[validate] Model RDS: %s | variant guess: %s",
                 opt$model_rds, variant))
 
-# ---------- helpers ----------
+# functions for computation of metrics
 calculate_metrics <- function(TP, TN, FP, FN){
   total <- TP + TN + FP + FN
   acc   <- if (total > 0) (TP + TN) / total else NA_real_

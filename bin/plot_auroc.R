@@ -18,7 +18,7 @@ if (length(files) == 0) {
   quit(save="no", status=0)
 }
 
-# Read & combine; add normalization if missing; try to infer from path
+# Read, combine and normalization
 read_one <- function(f) {
   df <- suppressMessages(readr::read_csv(f, show_col_types = FALSE))
   # Standardize column names
@@ -29,7 +29,7 @@ read_one <- function(f) {
     stop("File lacks required columns FPR, TPR, model, filter: ", f)
   }
   if (!("normalization" %in% names(df))) {
-    # try infer from path (e.g., ".../log.std/...")
+    # try infer from path
     norm <- str_match(f, "/(log\\.std|rank\\.unit|log\\.unit)/")[,2]
     if (is.na(norm)) norm <- "merged"
     df$normalization <- norm

@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
 
 `%||%` <- function(a,b) if (!is.null(a)) a else b
 
-# ---------------- CLI ----------------
+# command line options
 opt_list <- list(
   make_option("--siamcat_rds", type="character",
               help="Path to SIAMCAT RDS (contains @norm_feat[['norm.feat']] and labels)"),
@@ -40,7 +40,7 @@ stopifnot(!is.null(opt$siamcat_rds))
 
 dir.create(opt$outdir, showWarnings = FALSE, recursive = TRUE)
 
-# ----------- helpers -----------
+# Functions 
 canon <- function(s) tolower(gsub("[^a-z0-9]+","", s))
 aliases <- list(
   randomforest = "randomForest",
