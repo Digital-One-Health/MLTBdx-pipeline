@@ -1,12 +1,13 @@
 #!/usr/bin/env Rscript
 
 ## installing dependencies
-if (!requireNamespace("ranger", quietly = TRUE))
-    install.packages("ranger", repos="https://cloud.r-project.org")
-if (!requireNamespace("LiblineaR", quietly = TRUE))
-    install.packages("LiblineaR", repos="https://cloud.r-project.org")
-if (!requireNamespace(c("imbalance","xgboost"), quietly= TRUE))
-    install.packages(c("imbalance","xgboost"),quietly=TRUE)
+#if (!requireNamespace("ranger", quietly = TRUE))
+#    install.packages("ranger", repos="https://cloud.r-project.org")
+#if (!requireNamespace("LiblineaR", quietly = TRUE))
+#    install.packages("LiblineaR", repos="https://cloud.r-project.org")
+#if (!requireNamespace(c("imbalance","xgboost"), quietly= TRUE))
+#    install.packages(c("devtools","xgboost"), quietly=TRUE)
+#    devtools::install_github("ncordon/imbalance")
 suppressPackageStartupMessages({
   library(optparse)
   library(SIAMCAT)

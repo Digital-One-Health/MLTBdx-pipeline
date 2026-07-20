@@ -1,14 +1,23 @@
 #!/usr/bin/env Rscript
 
 suppressPackageStartupMessages({
-  if (!requireNamespace("optparse", quietly = TRUE))
-    install.packages("optparse", repos="https://cloud.r-project.org")
+#  if (!requireNamespace("peakRAM", quietly = TRUE)) {
+##     install.packages("peakRAM", repos = "https://cloud.r-project.org")
+#  }
+  library(peakRAM)
+	
+#  if (!requireNamespace("optparse", quietly = TRUE))
+#    install.packages("optparse", repos="https://cloud.r-project.org")
   library(optparse)
-  if (!requireNamespace("SIAMCAT", quietly = TRUE))
-    stop("Please install SIAMCAT first (BiocManager::install('SIAMCAT'))")
+#  if (!requireNamespace("BiocManager", quietly = TRUE)) {
+#    install.packages("BiocManager", repos = "https://cloud.r-project.org")
+ # }
+
+  #if (!requireNamespace("SIAMCAT", quietly = TRUE)) {
+   # BiocManager::install("SIAMCAT", update = FALSE, ask = FALSE)
+ # } 
   library(SIAMCAT)
 })
-
 opt <- parse_args(OptionParser(option_list = list(
   make_option("--features",     type="character", help="Features CSV"),
   make_option("--meta",         type="character", help="Meta CSV"),
