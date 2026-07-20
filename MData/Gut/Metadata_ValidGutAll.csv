@@ -1,0 +1,114 @@
+SampleID,Study,Continent,Country,Specific_loc,lat_lon,Platform,Disease_Status,Body_Site,Target_region,Instrument,TB_treatment,diversity_inverse_simpson,diversity_shannon,diversity_fisher,diversity_coverage,evenness_pielou,dominance_dmn,PD,SR,Read_Count,ASV_Count,LibraryLayout,Density,Incidence
+CRR1093600,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093601,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093602,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093603,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093604,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093605,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093606,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093607,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093608,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093609,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093610,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093611,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093612,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093613,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093614,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,healthy_individual,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093615,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093616,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093617,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093618,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093619,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093620,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093621,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093622,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093623,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093624,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093625,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093626,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093627,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093628,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093629,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093630,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093631,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093632,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093633,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093634,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093635,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093636,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093637,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093638,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093639,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093640,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093641,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093642,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093643,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093644,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093645,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093646,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093647,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093648,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093649,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093650,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093651,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093652,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093653,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093654,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093655,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093656,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093657,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093658,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093659,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093660,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093661,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+CRR1093662,"Yang et al,2024",Asia,China,,Unknown,ILLUMINA,TB_case,Gut,V3-V4,Illumina NovaSeq,Unknown,,0.0,,inf,0.0,,0.0,0,0.0,0.0,PAIRED,151.0,0.00059
+SRR11457823,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,26.96781961,3.648487002,9.575967623,9.0,0.887521029,0.143803725,8.4714423,61,,,,21.0,0.00056
+SRR11457824,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,55.29244138,4.126697095,11.70434697,22.0,0.961831047,0.068809643,9.66498608,73,,,,21.0,0.00056
+SRR11457825,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,44.02778542,3.869509809,8.758730433,18.0,0.965607208,0.073113208,8.25044161,55,,,,21.0,0.00056
+SRR11457826,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,40.29929331,3.881709368,9.467215657,15.0,0.948066121,0.098053892,6.088115501,60,,,,21.0,0.00056
+SRR11457827,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,23.8122094,3.556388951,8.817694649,8.0,0.875862299,0.168720379,8.339966552,58,,,,21.0,0.00056
+SRR11457828,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,67.82635008,4.329981011,13.77628521,27.0,0.972079796,0.059830269,10.0097565,86,,,,21.0,0.00056
+SRR11457829,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,76.6584485,4.469525873,17.01010208,29.0,0.964355388,0.049205252,12.00917523,103,,,,21.0,0.00056
+SRR11457830,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,13.54200999,3.00607542,5.92687662,5.0,0.804264616,0.239689266,6.984939771,42,,,,21.0,0.00056
+SRR11457831,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,32.29981867,3.891732401,11.80968272,15.0,0.907066587,0.150350877,8.524769771,73,,,,21.0,0.00056
+SRR11457832,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,44.31676121,4.029523159,11.33228127,20.0,0.95168205,0.120962889,8.086475682,69,,,,21.0,0.00056
+SRR11457833,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,90.01476424,4.634659625,20.38582854,34.0,0.968076787,0.046441743,12.56884227,120,,,,21.0,0.00056
+SRR11457834,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,31.17181276,3.833576525,11.14143064,10.0,0.89351189,0.12852745,9.782424958,73,,,,21.0,0.00056
+SRR11457835,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,61.19223079,4.259483774,13.80416472,23.0,0.961331503,0.067768595,9.968635237,84,,,,21.0,0.00056
+SRR11457836,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,64.93862768,4.340447321,14.70944033,25.0,0.955352344,0.064313457,11.18053454,94,,,,21.0,0.00056
+SRR11457837,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,73.90602651,4.411532129,15.95744908,30.0,0.970998436,0.059600348,10.99805133,94,,,,21.0,0.00056
+SRR11457838,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,46.06364453,4.039129167,11.73830671,18.0,0.941421128,0.093319735,9.694182464,73,,,,21.0,0.00056
+SRR11457839,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,61.98753256,4.259211153,13.55081321,24.0,0.966526551,0.069325901,11.25371434,82,,,,21.0,0.00056
+SRR11457840,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,60.47234537,4.241178389,13.4160919,24.0,0.965121734,0.076168391,10.96740974,81,,,,21.0,0.00056
+SRR11457841,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,36.29735625,3.861054858,10.98527024,13.0,0.908805268,0.099859791,9.981015184,70,,,,21.0,0.00056
+SRR11457842,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,52.73238258,4.196888895,13.79580148,22.0,0.944681149,0.089028501,11.87318033,85,,,,21.0,0.00056
+SRR11457843,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,81.78694423,4.526788333,17.97749355,33.0,0.970697428,0.05398773,11.55681518,106,,,,21.0,0.00056
+SRR11457844,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,75.08427495,4.519128393,19.31619266,29.0,0.950676901,0.061548305,13.8740323,116,,,,21.0,0.00056
+SRR11457845,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,78.904603,4.505207184,17.50228471,30.0,0.964128442,0.049670552,14.36702955,107,,,,21.0,0.00056
+SRR11457846,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,39.79685154,3.8479963,9.552094422,15.0,0.951755505,0.10188172,8.75741326,57,,,,21.0,0.00056
+SRR11457867,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,52.98409335,4.09286594,11.71750877,21.0,0.963368371,0.070962125,10.15990973,70,,,,21.0,0.00056
+SRR11457868,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,56.26385087,4.174893433,12.79737356,22.0,0.955473912,0.071825008,9.79113221,79,,,,21.0,0.00056
+SRR11457869,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,52.89394212,4.068718655,11.15343171,22.0,0.971134594,0.074056147,9.089845901,66,,,,21.0,0.00056
+SRR11457870,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,61.72074879,4.194305657,11.92499581,25.0,0.9807419,0.058788122,10.03694186,72,,,,21.0,0.00056
+SRR11457871,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,28.56817552,3.681206594,8.314700212,14.0,0.936258862,0.17903816,6.301188925,51,,,,21.0,0.00056
+SRR11457872,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,17.17509629,2.952668526,3.084693293,7.0,0.929080715,0.165198536,2.618675691,24,,,,21.0,0.00056
+SRR11457873,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,32.6774904,3.908368506,11.62746254,15.0,0.916880605,0.156195965,7.639152121,71,,,,21.0,0.00056
+SRR11457874,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,22.65801482,3.320529513,5.40054976,8.0,0.919580448,0.161828168,3.971274458,37,,,,21.0,0.00056
+SRR11457875,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,29.18257115,3.741178367,9.342801438,12.0,0.913742923,0.17302666,9.146663779,60,,,,21.0,0.00056
+SRR11457876,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,45.82264034,3.934051029,9.727563402,19.0,0.968872367,0.086737401,8.804849664,58,,,,21.0,0.00056
+SRR11457877,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,58.00551218,4.182010468,12.17769933,23.0,0.965658732,0.068440455,8.255391708,76,,,,21.0,0.00056
+SRR11457878,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,37.61409226,3.791097006,8.589154554,15.0,0.954866062,0.107290905,7.612748949,53,,,,21.0,0.00056
+SRR11457879,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,67.03986183,4.30586317,14.26707647,26.0,0.971798963,0.055165692,11.48818698,84,,,,21.0,0.00056
+SRR11457880,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,53.86573001,4.171250771,13.3624018,21.0,0.949209019,0.084775389,12.47499699,81,,,,21.0,0.00056
+SRR11457881,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,8.906300329,2.315075767,1.931920061,4.0,0.931655025,0.342351717,3.169080596,12,,,,21.0,0.00056
+SRR11457882,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,13.80539273,2.724284242,2.886310828,6.0,0.942537663,0.216032609,2.731280844,18,,,,21.0,0.00056
+SRR11457883,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,31.81976797,3.586747049,7.216495451,13.0,0.953617712,0.117372577,6.815460433,43,,,,21.0,0.00056
+SRR11457884,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,60.64276413,4.365827266,15.80088124,26.0,0.948027345,0.088800905,13.42344252,100,,,,21.0,0.00056
+SRR11457885,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,35.75725591,3.725511877,7.690909739,14.0,0.942870686,0.098718915,6.671797481,52,,,,21.0,0.00056
+SRR11457886,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,70.56255546,4.342364276,14.70915112,28.0,0.974859836,0.050236407,8.890223123,86,,,,21.0,0.00056
+SRR11457905,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,61.93744786,4.354087527,15.68775889,27.0,0.953934131,0.099775155,10.4028718,96,,,,21.0,0.00056
+SRR11457906,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,NO,61.03450625,4.293641888,14.78460924,25.0,0.958972279,0.085699171,9.371975095,88,,,,21.0,0.00056
+SRR11457907,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,TB_case,Gut,V4,Illumina MiSeq,YES,21.34435689,3.406475905,7.161420616,7.0,0.87529116,0.175074627,7.282852955,49,,,,21.0,0.00056
+SRR11457908,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,31.52134313,3.748530493,9.681280951,13.0,0.919312341,0.141522653,9.177407056,59,,,,21.0,0.00056
+SRR11457909,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,54.60793131,4.189425869,13.44650561,20.0,0.945519993,0.074159573,10.33330772,84,,,,21.0,0.00056
+SRR11457910,"Namasivayam et al, 2020",Africa,Mali,Mali,17.5707 N 3.9962 W,ILLUMINA,healthy_individual,Gut,V4,Illumina MiSeq,healthy_individual,24.98001184,3.574182542,8.912085847,8.0,0.872955973,0.153413655,7.959063431,60,,,,21.0,0.00056
