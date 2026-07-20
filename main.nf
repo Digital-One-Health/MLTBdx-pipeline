@@ -2,34 +2,34 @@ nextflow.enable.dsl=2
 
 /*******************************
  * Local “read-only” defaults
- * (Define real defaults in nextflow.config; these are just fallbacks)
+ * (Populating params directly avoids DSL2 statement conflicts)
  *******************************/
-def FEATURES   = params.features   ?: '../Data/FeaturesDiseaseStatusAsiaLung.csv'
-def META       = params.meta       ?: '../Data/MetaDiseaseStatusAsiaLung.csv'
-def COVARIATES = params.covariates  ?: 'diversity_shannon,Incidence,Density,Disease_Status'
-def OUTDIR     = params.outdir     ?: '../NextflowResults/results_DiseaseStatusAsia'
+params.features           = params.features           ?: '../Data/FeaturesDiseaseStatusAsiaLung.csv'
+params.meta               = params.meta               ?: '../Data/MetaDiseaseStatusAsiaLung.csv'
+params.covariates         = params.covariates         ?: 'diversity_shannon,Incidence,Density,Disease_Status'
+params.outdir             = params.outdir             ?: '../NextflowResults/results_DiseaseStatusAsia'
 
-def NORMS_RAW  = params.norms      ?: 'log.std,rank.unit,log.unit'
-def CUTOFFS_RAW= params.cutoffs    ?: '0.005,0.0001,0.0005,0.01'
-def MODELS_RAW = params.models     ?: 'ridge_ll'
-def RF_CONSENS_THRESH = (params.rf_consens_thresh   ?: 0.01) as float
+params.norms              = params.norms              ?: 'log.std,rank.unit,log.unit'
+params.cutoffs            = params.cutoffs            ?: '0.005,0.0001,0.0005,0.01'
+params.models             = params.models             ?: 'ridge_ll'
+params.rf_consens_thresh  = params.rf_consens_thresh  ?: 0.01
 
-def SEL_METRIC = params.sel_metric ?: 'mcc'               // single canonical name
-def LABEL_COL  = (params.label_column ?: params.label_col) ?: 'Disease_Status'
-def CASE_LABEL = params.case_label   ?: 'TB_case'
-def TAXA_COL   = params.taxa_col     ?: 'Genus'
-def META_IDCOL = params.meta_id_col  ?: 'SampleID'
+params.sel_metric         = params.sel_metric         ?: 'mcc'
+params.label_column       = params.label_column       ?: 'Disease_Status'
+params.case_label         = params.case_label         ?: 'TB_case'
+params.taxa_col           = params.taxa_col           ?: 'Genus'
+params.meta_id_col        = params.meta_id_col        ?: 'SampleID'
 
-def SHAP_NSIM  = (params.shap_nsim   ?: 100)  as int
-def SHAP_SAMP  = (params.shap_sample ?: 200)  as int
-def SHAP_MTRY  = (params.shap_mtry   ?: 18)   as int
-def SHAP_TREES = (params.shap_trees  ?: 1000) as int
-def SHAP_ALPHA = (params.shap_alpha  ?: 0.5)  as float
-def SHAP_THRESH= (params.shap_thresh ?: 0.5)  as float
+params.shap_nsim          = params.shap_nsim          ?: 100
+params.shap_sample        = params.shap_sample        ?: 200
+params.shap_mtry          = params.shap_mtry          ?: 18
+params.shap_trees         = params.shap_trees         ?: 1000
+params.shap_alpha         = params.shap_alpha         ?: 0.5
+params.shap_thresh        = params.shap_thresh        ?: 0.5
 
-def VAL_FEATURES    = params.val_features    ?: '../Data/Validation/Validation_Features.csv'
-def VAL_META        = params.val_meta        ?: '../Data/Validation/Validation_Meta.csv'
-def VAL_FEAT_IDCOL  = params.val_feat_id_col ?: TAXA_COL
+params.val_features       = params.val_features       ?: '../Data/Validation/Validation_Features.csv'
+params.val_meta           = params.val_meta           ?: '../Data/Validation/Validation_Meta.csv'
+params.val_feat_id_col    = params.val_feat_id_col    ?: params.taxa_col
 
 /*******************************
  * Utils
@@ -40,15 +40,11 @@ def listify(v) {
   return v.toString().split(',').collect{ it.trim() }.findAll{ it }
 }
 
-// Make outdir absolute and canonical
-def OUTDIR_ABS = file(OUTDIR).toAbsolutePath().normalize().toString()
-log.info "OUTDIR_ABS = ${OUTDIR_ABS}"
-
 /*******************************
  * Processes
  *******************************/
 process PREPARE_DATA {
-  publishDir "${OUTDIR}/base", mode: 'copy'
+  publishDir "${params.outdir}/base", mode: 'copy'
   input:
     path features
     path meta
@@ -60,18 +56,18 @@ process PREPARE_DATA {
   Rscript ${projectDir}/bin/prepare_data.R \\
     --features '${features}' \\
     --meta '${meta}' \\
-    --taxa_col '${TAXA_COL}' \\
-    --meta_id_col '${META_IDCOL}' \\
-    --covars '${COVARIATES}' \\
-    --label_column '${LABEL_COL}' \\
-    --case_label '${CASE_LABEL}' \\
+    --taxa_col '${params.taxa_col}' \\
+    --meta_id_col '${params.meta_id_col}' \\
+    --covars '${params.covariates}' \\
+    --label_column '${params.label_column}' \\
+    --case_label '${params.case_label}' \\
     --out sc_base.rds
   """
 }
 
 process FLT_SPLIT {
   tag "${norm}|${cutoff}"
-  publishDir "${OUTDIR}/${norm}", mode:'copy'
+  publishDir {"${params.outdir}/${norm}"}, mode:'copy'
   input:
     tuple val(norm), val(cutoff), path(base_rds)
   output:
@@ -92,21 +88,20 @@ process FLT_SPLIT {
   """
 }
 
-
 process TRAIN_EVAL {
   tag "${norm}|${cutoff}|${model}"
-  publishDir "${OUTDIR}/${norm}", mode:'copy'
+  publishDir {"${params.outdir}/${norm}"}, mode:'copy'
   input:
     tuple val(norm), val(cutoff), path(split_rds), val(model)
   output:
     tuple val(norm),
           val(model),
           val(cutoff),
-          val("${norm}_${model}_${cutoff}"),                 // model_id (plain SIAMCAT)
+          val("${norm}_${model}_${cutoff}"),
           path("auroc_${norm}_${model}_${cutoff}.csv"),
           path("perf_${norm}_${model}_${cutoff}.csv"),
           path("model_${norm}_${model}_${cutoff}.rds"),
-          path("model_${norm}_${model}_${cutoff}_mwmote.rds", optional: true),   // ### NEW: MWMOTE RDS
+          path("model_${norm}_${model}_${cutoff}_mwmote.rds", optional: true),
           path("evaluation_${norm}_${model}_${cutoff}.pdf", optional: true),
           path("interpretation_${norm}_${model}_${cutoff}.pdf")
   script:
@@ -120,7 +115,7 @@ process TRAIN_EVAL {
     --cutoff ${cutoff} \\
     --eval_pdf    evaluation_${norm}_${model}_${cutoff}.pdf \\
     --interp_pdf  interpretation_${norm}_${model}_${cutoff}.pdf \\
-    --rf_consens_thresh ${RF_CONSENS_THRESH} \\
+    --rf_consens_thresh ${params.rf_consens_thresh} \\
     --auroc_csv   auroc_${norm}_${model}_${cutoff}.csv \\
     --perf_csv    perf_${norm}_${model}_${cutoff}.csv \\
     --model_rds_out model_${norm}_${model}_${cutoff}.rds
@@ -128,7 +123,7 @@ process TRAIN_EVAL {
 }
 
 process FINALIZE_RESULTS {
-  publishDir "${OUTDIR}", mode:'copy'
+  publishDir "${params.outdir}", mode:'copy'
   input:
     path all_csvs
   output:
@@ -153,19 +148,17 @@ process FINALIZE_RESULTS {
 
 process WRITE_MODEL_MAP {
   tag "model-map"
-  publishDir "${OUTDIR_ABS}/model_maps", mode: 'copy'
-
   input:
     tuple val(norm), val(model), val(cutoff), val(model_id),
           path(auroc_csv), path(perf_csv),
-          path(model_rds),                   // plain SIAMCAT
-          path(mwmote_rds)   // ### NEW: MWMOTE RDS
+          path(model_rds), path(mwmote_rds)
+    val outdir_abs
   output:
     path "model_map_${model_id}.tsv"
 
   script:
   """
-  DEST_DIR="${OUTDIR_ABS}/${norm}"
+  DEST_DIR="${outdir_abs}/${norm}"
   mkdir -p "\${DEST_DIR}"
 
   PUB_RDS="\${DEST_DIR}/model_${model_id}.rds"
@@ -174,24 +167,19 @@ process WRITE_MODEL_MAP {
   echo -e "model_id\\tmodel_rds" > model_map_${model_id}.tsv
   echo -e "${model_id}\\t\${PUB_RDS}" >> model_map_${model_id}.tsv
 
-  ### NEW: add mapping for the MWMOTE variant if the file exists
   if [ -s "${mwmote_rds}" ]; then
     echo -e "${model_id}_MWMOTE\\t\${PUB_RDS_MWM}" >> model_map_${model_id}.tsv
   fi
-  ### END NEW
   """
 }
 
-
 process SELECT_TOP3_BY_METRIC {
-  tag "select-top3-${SEL_METRIC}"
-  publishDir "${OUTDIR}/top3", mode:'copy'
-
+  tag "select-top3-${params.sel_metric}"
+  publishDir "${params.outdir}/top3", mode:'copy'
   input:
     path merged_perf
     path merged_auroc
     path model_maps
-
   output:
     path "top3.tsv"
 
@@ -204,13 +192,11 @@ process SELECT_TOP3_BY_METRIC {
 
   PERF <- fread('model_performance_merged.csv')
 
-  # Only SIAMCAT models are valid for external validation
   if ("variant" %in% names(PERF)) {
     PERF <- PERF[variant == "siamcat"]
     if (nrow(PERF) == 0L) stop("No rows with variant == 'siamcat' found in model_performance_merged.csv.")
   }
 
-  # Ensure model_id exists
   if (!'model_id' %in% names(PERF)) {
     if (all(c('norm','model','cutoff') %in% names(PERF))) {
       PERF[, model_id := paste(norm, model, cutoff, sep = '_')]
@@ -219,7 +205,6 @@ process SELECT_TOP3_BY_METRIC {
     } else stop('model_performance_merged.csv needs model_id or norm/model/cutoff.')
   }
 
-  # Try to standardize AUROC column if present; otherwise create placeholder
   cand_auc <- c('auroc','AUC','AUROC','auc')
   auc_col <- cand_auc[cand_auc %in% names(PERF)][1]
   if (!is.na(auc_col)) {
@@ -228,20 +213,17 @@ process SELECT_TOP3_BY_METRIC {
     PERF[, auroc := NA_real_]
   }
 
-  # column matching (case-insensitive, alnum normalized)
-  desired <- tolower("${SEL_METRIC}")
+  desired <- tolower("${params.sel_metric}")
   alnum <- function(x) gsub('[^a-z0-9]+','', tolower(x))
   cn_alnum <- alnum(names(PERF))
   metric_idx <- which(cn_alnum == alnum(desired))[1]
   metric_col <- if (length(metric_idx)) names(PERF)[metric_idx] else NA_character_
 
-  # If desired metric missing, fall back
   if (is.na(metric_col) || !(metric_col %in% names(PERF))) {
     metric_col <- if ("mcc" %in% names(PERF)) "mcc" else if ("accuracy" %in% names(PERF)) "accuracy" else "auroc"
   }
   if (!(metric_col %in% names(PERF))) metric_col <- "model_id"
 
-  # Read model maps written by WRITE_MODEL_MAP
   map_files <- list.files('.', pattern = glob2rx('model_map_*.tsv'), full.names = TRUE)
   if (!length(map_files)) stop('No model_map_*.tsv files found.')
 
@@ -249,13 +231,10 @@ process SELECT_TOP3_BY_METRIC {
                    fill=TRUE, use.names=TRUE)
   MAP <- unique(MAP[, .(model_id, model_rds)])
 
-  # Merge perf + map
   M <- merge(PERF, MAP, by='model_id', all.x=TRUE)
 
-  # Ensure auroc exists on merged too
   if (!("auroc" %in% names(M))) M[, auroc := NA_real_]
 
-  # Sort only by columns that exist
   sort_cols <- unique(c(metric_col, "auroc", "accuracy", "model_id"))
   sort_cols <- sort_cols[sort_cols %in% names(M)]
 
@@ -264,37 +243,29 @@ process SELECT_TOP3_BY_METRIC {
 
   if (length(sort_cols)) setorderv(M, sort_cols, ord, na.last = TRUE)
 
-  # Take top 3
   TOP3 <- M[1:min(3L, .N), .(model_id,
-                            metric_used = metric_col,
-                            metric_value = get(metric_col),
-                            auroc,
-                            model_rds)]
+                             metric_used = metric_col,
+                             metric_value = get(metric_col),
+                             auroc,
+                             model_rds)]
   fwrite(TOP3, "top3.tsv", sep="\\t")
-
   RS
 
   Rscript select_top3.R
   """
 }
 
-
-
 process SELECT_TOP2_BY_METRIC {
-  tag "select-top2-${SEL_METRIC}"
-  publishDir "${OUTDIR}/top2", mode:'copy'
-
-  input:
+  tag "select-top2-${params.sel_metric}"
+  publishDir "${params.outdir}/top2", mode:'copy'
+errorStrategy {task.exitStatus ==1 ? 'ignore':'terminate'}  
+input:
     path merged_perf
     path merged_auroc
     path model_maps
-
   output:
     path "top2.tsv"
-
-  errorStrategy {
-    task.exitStatus == 1 ? 'ignore' : 'terminate'
-  }
+ // errorStrategy = { task.exitStatus == 1 ? 'ignore' : 'terminate' }
 
   script:
   """
@@ -315,7 +286,7 @@ process SELECT_TOP2_BY_METRIC {
   auc_in_perf <- cand_auc[cand_auc %in% names(PERF)][1]
   if (!is.na(auc_in_perf)) setnames(PERF, auc_in_perf, 'auroc') else PERF[, auroc := NA_real_]
 
-  desired <- tolower("${SEL_METRIC}")
+  desired <- tolower("${params.sel_metric}")
   alias <- list('f1'='f1','f1_score'='f1','f1score'='f1','mcc'='mcc',
                 'accuracy'='accuracy','sens'='sensitivity','recall'='sensitivity','tpr'='sensitivity',
                 'spec'='specificity','tnr'='specificity','prec'='precision','ppv'='precision',
@@ -343,7 +314,6 @@ process SELECT_TOP2_BY_METRIC {
   if (length(sort_cols) && tail(sort_cols,1L) == 'model_id') ord[length(ord)] <- +1L
   if (length(sort_cols)) data.table::setorderv(M, sort_cols, ord, na.last=TRUE)
 
-  # top-2 SIAMCAT + top-2 MWMOTE
   if ("variant" %in% names(M)) {
     M_s <- M[variant == "siamcat"]
     M_m <- M[variant == "mwmote"]
@@ -355,7 +325,6 @@ process SELECT_TOP2_BY_METRIC {
   } else {
     TOP2 <- M[1:min(2L, .N), .(model_id, auroc, model_rds)]
   }
-  ### END NEW
 
   fwrite(TOP2, 'top2.tsv', sep='\\t')
   RS
@@ -364,17 +333,13 @@ process SELECT_TOP2_BY_METRIC {
   """
 }
 
-
-
 process VALIDATE_TOP3 {
   tag "validate-top3"
-  publishDir "${OUTDIR}/validation", mode:'copy'
-
+  publishDir "${params.outdir}/validation", mode:'copy'
   input:
     path top3_tsv
     path val_features
     path val_meta
-
   output:
     path "validation_metrics_*.csv"
     path "validation_evaluation_*.pdf"
@@ -384,35 +349,25 @@ process VALIDATE_TOP3 {
   """
   set -euo pipefail
 
-  # Use staged filenames (do NOT reference bash variables like \$top3_tsv)
   TOP3_FILE="${top3_tsv}"
   VAL_FEAT="${val_features}"
   VAL_META="${val_meta}"
 
-  echo "[VALIDATE] top3 file: \$TOP3_FILE"
-  echo "[VALIDATE] val feat : \$VAL_FEAT"
-  echo "[VALIDATE] val meta : \$VAL_META"
-  ls -l
-
-  # Read TSV reliably with cut (no IFS=\$'\\t' problems)
   tail -n +2 "\$TOP3_FILE" | while read -r LINE; do
     MODEL_ID=\$(printf "%s" "\$LINE" | cut -f1)
     MODEL_RDS=\$(printf "%s" "\$LINE" | cut -f5)
 
-    echo "[VALIDATE] Model: \$MODEL_ID"
-    echo "[VALIDATE] RDS:   \$MODEL_RDS"
-
-    [[ -n "\$MODEL_ID" && -n "\$MODEL_RDS" ]] || { echo "[VALIDATE] Bad row: \$LINE" >&2; continue; }
-    [[ -s "\$MODEL_RDS" ]] || { echo "[VALIDATE] Missing RDS: \$MODEL_RDS" >&2; continue; }
+    [[ -n "\$MODEL_ID" && -n "\$MODEL_RDS" ]] || continue
+    [[ -s "\$MODEL_RDS" ]] || continue
 
     Rscript "${projectDir}/bin/validate.R" \\
       --model_rds   "\$MODEL_RDS" \\
       --features    "\$VAL_FEAT" \\
       --meta        "\$VAL_META" \\
-      --label_col   "${LABEL_COL}" \\
-      --case_label  "${CASE_LABEL}" \\
-      --meta_id_col "${META_IDCOL}" \\
-      --feat_id_col "${VAL_FEAT_IDCOL}" \\
+      --label_col   "${params.label_column}" \\
+      --case_label  "${params.case_label}" \\
+      --meta_id_col "${params.meta_id_col}" \\
+      --feat_id_col "${params.val_feat_id_col}" \\
       --outdir      . \\
       --prefix      "\$MODEL_ID" \\
       --threshold   0.5
@@ -420,17 +375,14 @@ process VALIDATE_TOP3 {
   """
 }
 
-
 process SHAP_FROM_SIAMCAT_TOP2 {
   tag "shap-top2"
-  publishDir "${OUTDIR}/shap_best", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/shap_best", mode: 'copy', overwrite: true
   time '6h'
   errorStrategy 'terminate'
-
   input:
     path top2_tsv
     val  outabs
-
   output:
     path "*.pdf", optional: true
     path "metrics_*.csv", optional: true
@@ -442,10 +394,6 @@ process SHAP_FROM_SIAMCAT_TOP2 {
   exec > >(stdbuf -oL -eL tee -a SHAP_RUN.txt) 2>&1
 
   PROJ="${projectDir}"
-
-  echo "[SHAP] top2: ${top2_tsv}"
-  echo "[SHAP] results root(abs): ${outabs}"
-  ls -1 "${outabs}" || true
 
   tail -n +2 "${top2_tsv}" | cut -f1 | while IFS= read -r MODEL_ID; do
     [ -n "\$MODEL_ID" ] || continue
@@ -461,34 +409,27 @@ process SHAP_FROM_SIAMCAT_TOP2 {
       lasso_ll|lasso|lasso-ll)      SHAP_METHOD="lasso_ll" ;;
       enet_ll|enet|elasticnet)      SHAP_METHOD="enet_ll" ;;
       xgboost|xgb)                  SHAP_METHOD="xgboost" ;;
-      *)                             SHAP_METHOD="\$MODEL_RAW" ;;
+      *)                            SHAP_METHOD="\$MODEL_RAW" ;;
     esac
 
     RDS="${outabs}/\$NORM/model_\$MODEL_ID.rds"
-    echo "[SHAP] probe: \$RDS"
     if [ ! -s "\$RDS" ]; then
-      echo "[SHAP] not found, searching under ${outabs}"
       RDS=\$(find "${outabs}" -type f -name "model_\${MODEL_ID}.rds" -print -quit 2>/dev/null || true)
     fi
-    [ -n "\$RDS" ] && [ -s "\$RDS" ] || { echo "[SHAP] missing RDS for \$MODEL_ID"; continue; }
-
-    echo "[SHAP] MODEL_ID=\$MODEL_ID | method=\$SHAP_METHOD"
-    echo "[SHAP] RDS=\$RDS"
+    [ -n "\$RDS" ] && [ -s "\$RDS" ] || continue
 
     Rscript "\$PROJ/bin/shap_explain.R" \\
       --siamcat_rds "\$RDS" \\
       --model_id    "\$MODEL_ID" \\
       --method      "\$SHAP_METHOD" \\
-      --mtry        "${SHAP_MTRY}" \\
-      --num_trees   "${SHAP_TREES}" \\
-      --alpha       "${SHAP_ALPHA}" \\
-      --threshold   "${SHAP_THRESH}" \\
-      --sample_n    "${SHAP_SAMP}" \\
-      --nsim        "${SHAP_NSIM}" \\
+      --mtry        "${params.shap_mtry}" \\
+      --num_trees   "${params.shap_trees}" \\
+      --alpha       "${params.shap_alpha}" \\
+      --threshold   "${params.shap_thresh}" \\
+      --sample_n    "${params.shap_sample}" \\
+      --nsim        "${params.shap_nsim}" \\
       --outdir      .
   done
-
-  echo "[SHAP] done."
   """
 }
 
@@ -496,27 +437,30 @@ process SHAP_FROM_SIAMCAT_TOP2 {
  * Workflow
  *******************************/
 workflow {
+  // Move logic inside workflow context to prevent mixing declarations
+  def OUTDIR_ABS = file(params.outdir).toAbsolutePath().normalize().toString()
+  log.info "OUTDIR_ABS = ${OUTDIR_ABS}"
+
   // base channels
-  CH_FEATURES = Channel.fromPath(FEATURES)
-  CH_META     = Channel.fromPath(META)
+  CH_FEATURES = Channel.fromPath(params.features)
+  CH_META     = Channel.fromPath(params.meta)
   CH_SEED     = Channel.value(42)
 
   // expand params -> lists
-  def NORMS_LIST   = listify(NORMS_RAW)
-  def CUTOFFS_LIST = listify(CUTOFFS_RAW)
-  def MODELS_LIST  = listify(MODELS_RAW)
+  def NORMS_LIST   = listify(params.norms)
+  def CUTOFFS_LIST = listify(params.cutoffs)
+  def MODELS_LIST  = listify(params.models)
 
-  // Make absolute path to your results root once
-  def OUTABS = new File(OUTDIR).getCanonicalPath()
+  def OUTABS = new File(params.outdir).getCanonicalPath()
   CH_OUTABS = Channel.value(OUTABS)
 
   log.info "NORMS   = ${NORMS_LIST}"
   log.info "CUTOFFS = ${CUTOFFS_LIST}"
   log.info "MODELS  = ${MODELS_LIST}"
 
-  assert NORMS_LIST   && NORMS_LIST.size()   > 0 : "No norms supplied. Try --norms 'log.std,rank.unit,log.unit'"
-  assert CUTOFFS_LIST && CUTOFFS_LIST.size() > 0 : "No cutoffs supplied. Try --cutoffs '0.005,0.0001,0.0005,0.01'"
-  assert MODELS_LIST  && MODELS_LIST.size()  > 0 : "No models supplied. Try --models 'ridge_ll'"
+  assert NORMS_LIST   && NORMS_LIST.size()   > 0 : "No norms supplied."
+  assert CUTOFFS_LIST && CUTOFFS_LIST.size() > 0 : "No cutoffs supplied."
+  assert MODELS_LIST  && MODELS_LIST.size()  > 0 : "No models supplied."
 
   CH_MODELS = Channel.from(MODELS_LIST)
 
@@ -545,14 +489,13 @@ workflow {
   // 8) finalize once
   def (CH_AUROC_PLOTS, CH_MODEL_PERF_MERGED, CH_AUROC_MERGED) = FINALIZE_RESULTS(ALL_CSVS)
 
-  // 9) model maps (now include both SIAMCAT + MWMOTE RDS mapping)
-  MODEL_MAP_SHARDS = TRAINED.map { t -> tuple(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]) }   // ### NEW: pass mwmote_rds
-  MODEL_MAP_FILES  = WRITE_MODEL_MAP(MODEL_MAP_SHARDS).collect()
+  // 9) model maps 
+  MODEL_MAP_SHARDS = TRAINED.map { t -> tuple(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]) } 
+  MODEL_MAP_FILES  = WRITE_MODEL_MAP(MODEL_MAP_SHARDS, CH_OUTABS).collect()
 
   // 10) selections & validation
   TOP3_TSV = SELECT_TOP3_BY_METRIC(CH_MODEL_PERF_MERGED, CH_AUROC_MERGED, MODEL_MAP_FILES)
-  VALIDATE_TOP3(TOP3_TSV, Channel.fromPath(VAL_FEATURES), Channel.fromPath(VAL_META))
-
+  VALIDATE_TOP3(TOP3_TSV, Channel.fromPath(params.val_features), Channel.fromPath(params.val_meta))
 
   TOP2_TSV = SELECT_TOP2_BY_METRIC(CH_MODEL_PERF_MERGED, CH_AUROC_MERGED, MODEL_MAP_FILES)
   SHAP_FROM_SIAMCAT_TOP2(TOP2_TSV, CH_OUTABS)
