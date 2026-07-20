@@ -2,6 +2,7 @@ name: r-siamcat
 channels:
   - conda-forge
   - bioconda
+  - defaults
 dependencies:
   - bioconductor-biomaRt
   - bioconductor-biomformat
@@ -16,7 +17,7 @@ dependencies:
   - bioconductor-Rsamtools
   - bioconductor-rtracklayer
   - bioconductor-XVector
-  - bioconductor-SIAMCAT
+  - bioconductor-siamcat
   - conda-forge::icu
   - git
   - libcurl
@@ -24,7 +25,7 @@ dependencies:
   - openssl
   - r-base=4.3.*
   - r-biocmanager
-  - r-data.table
+  - r-data.table>=1.16.0  
   - r-devtools
   - r-dplyr
   - r-fastshap
@@ -32,6 +33,7 @@ dependencies:
   - r-glmnet
   - r-gridExtra
   - r-igraph
+  - r-peakram
   - r-imbalance
   - r-lme4
   - r-liblinear
@@ -46,7 +48,6 @@ dependencies:
   - r-nanonext
   - r-nloptr
   - r-optparse
-  - r-peakram
   - r-pROC
   - r-ranger
   - r-randomforest
