@@ -56,7 +56,7 @@ calculate_metrics <- function(TP, TN, FP, FN){
              precision=prec,npv=npv,f1=f1, stringsAsFactors=FALSE)
 }
 
-# returns metrics ONLY (your original behavior)
+# returns metrics ONLY 
 calculate_eval_matrix <- function(siamcat_obj, threshold = 0.5) {
   preds <- tryCatch(pred_matrix(siamcat_obj), error=function(e) NULL)
   if (is.null(preds)) preds <- siamcat_obj@pred_matrix
@@ -79,7 +79,7 @@ calculate_eval_matrix <- function(siamcat_obj, threshold = 0.5) {
   calculate_metrics(TP, TN, FP, FN)
 }
 
-# NEW: export ROC curve points for validation
+# export ROC curve points for validation
 export_roc_curve <- function(siamcat_obj, out_csv, model_id, variant, threshold = 0.5) {
   if (!requireNamespace("pROC", quietly = TRUE)) {
     message("[validate] pROC not installed; skipping ROC export.")
