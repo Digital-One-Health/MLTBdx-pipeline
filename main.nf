@@ -176,10 +176,12 @@ process WRITE_MODEL_MAP {
 process SELECT_TOP3_BY_METRIC {
   tag "select-top3-${params.sel_metric}"
   publishDir "${params.outdir}/top3", mode:'copy'
+  
   input:
     path merged_perf
     path merged_auroc
     path model_maps
+    
   output:
     path "top3.tsv"
 
@@ -192,11 +194,13 @@ process SELECT_TOP3_BY_METRIC {
 
   PERF <- fread('model_performance_merged.csv')
 
+  # Filter variant if column exists
   if ("variant" %in% names(PERF)) {
     PERF <- PERF[variant == "siamcat"]
     if (nrow(PERF) == 0L) stop("No rows with variant == 'siamcat' found in model_performance_merged.csv.")
   }
 
+  # Ensure model_id column exists
   if (!'model_id' %in% names(PERF)) {
     if (all(c('norm','model','cutoff') %in% names(PERF))) {
       PERF[, model_id := paste(norm, model, cutoff, sep = '_')]
@@ -205,25 +209,19 @@ process SELECT_TOP3_BY_METRIC {
     } else stop('model_performance_merged.csv needs model_id or norm/model/cutoff.')
   }
 
-  cand_auc <- c('auroc','AUC','AUROC','auc')
-  auc_col <- cand_auc[cand_auc %in% names(PERF)][1]
-  if (!is.na(auc_col)) {
-    setnames(PERF, auc_col, 'auroc')
-  } else {
-    PERF[, auroc := NA_real_]
+  # Clean string "NA" text and convert target metric columns to numeric
+  metric_cols <- c("mcc", "sens", "spec", "auroc")
+  for (col in metric_cols) {
+    if (col %in% names(PERF)) {
+      PERF[get(col) == "NA", (col) := NA]
+      PERF[, (col) := as.numeric(as.character(get(col)))]
+    }
   }
 
-  desired <- tolower("${params.sel_metric}")
-  alnum <- function(x) gsub('[^a-z0-9]+','', tolower(x))
-  cn_alnum <- alnum(names(PERF))
-  metric_idx <- which(cn_alnum == alnum(desired))[1]
-  metric_col <- if (length(metric_idx)) names(PERF)[metric_idx] else NA_character_
+  # Remove rows where any of the primary sorting metrics are NA
+  PERF <- PERF[!is.na(mcc) & !is.na(sens) & !is.na(spec)]
 
-  if (is.na(metric_col) || !(metric_col %in% names(PERF))) {
-    metric_col <- if ("mcc" %in% names(PERF)) "mcc" else if ("accuracy" %in% names(PERF)) "accuracy" else "auroc"
-  }
-  if (!(metric_col %in% names(PERF))) metric_col <- "model_id"
-
+  # Merge with model map files
   map_files <- list.files('.', pattern = glob2rx('model_map_*.tsv'), full.names = TRUE)
   if (!length(map_files)) stop('No model_map_*.tsv files found.')
 
@@ -233,22 +231,21 @@ process SELECT_TOP3_BY_METRIC {
 
   M <- merge(PERF, MAP, by='model_id', all.x=TRUE)
 
+  # Apply multi-level sort: MCC (1st), SENS (2nd), SPEC (3rd) — all descending
+  setorderv(M, cols = c("mcc", "sens", "spec"), order = c(-1L, -1L, -1L), na.last = TRUE)
+
+  #  Extract Top 3 models
   if (!("auroc" %in% names(M))) M[, auroc := NA_real_]
 
-  sort_cols <- unique(c(metric_col, "auroc", "accuracy", "model_id"))
-  sort_cols <- sort_cols[sort_cols %in% names(M)]
-
-  ord <- rep(-1L, length(sort_cols))
-  if (length(sort_cols) && tail(sort_cols, 1L) == "model_id") ord[length(ord)] <- +1L
-
-  if (length(sort_cols)) setorderv(M, sort_cols, ord, na.last = TRUE)
-
   TOP3 <- M[1:min(3L, .N), .(model_id,
-                             metric_used = metric_col,
-                             metric_value = get(metric_col),
+                             metric_used = "mcc_sens_spec",
+                             metric_value = mcc,
+                             sens,
+                             spec,
                              auroc,
                              model_rds)]
-  fwrite(TOP3, "top3.tsv", sep="\\t")
+
+  fwrite(TOP3, "top3.tsv", sep="\t")
   RS
 
   Rscript select_top3.R
@@ -258,22 +255,26 @@ process SELECT_TOP3_BY_METRIC {
 process SELECT_TOP2_BY_METRIC {
   tag "select-top2-${params.sel_metric}"
   publishDir "${params.outdir}/top2", mode:'copy'
-errorStrategy {task.exitStatus ==1 ? 'ignore':'terminate'}  
-input:
+  errorStrategy { task.exitStatus == 1 ? 'ignore' : 'terminate' }
+
+  input:
     path merged_perf
     path merged_auroc
     path model_maps
+
   output:
     path "top2.tsv"
- // errorStrategy = { task.exitStatus == 1 ? 'ignore' : 'terminate' }
 
   script:
   """
   set -euo pipefail
+
   cat > select_top2.R <<'RS'
   suppressPackageStartupMessages({ library(data.table) })
+
   PERF <- fread('model_performance_merged.csv')
 
+  # Ensure model_id exists
   if (!'model_id' %in% names(PERF)) {
     if (all(c('norm','model','cutoff') %in% names(PERF))) {
       PERF[, model_id := paste(norm, model, cutoff, sep = '_')]
@@ -282,56 +283,52 @@ input:
     } else stop('model_performance_merged.csv needs model_id or norm/model/cutoff.')
   }
 
-  cand_auc <- c('auroc','AUC','AUROC','auc')
-  auc_in_perf <- cand_auc[cand_auc %in% names(PERF)][1]
-  if (!is.na(auc_in_perf)) setnames(PERF, auc_in_perf, 'auroc') else PERF[, auroc := NA_real_]
-
-  desired <- tolower("${params.sel_metric}")
-  alias <- list('f1'='f1','f1_score'='f1','f1score'='f1','mcc'='mcc',
-                'accuracy'='accuracy','sens'='sensitivity','recall'='sensitivity','tpr'='sensitivity',
-                'spec'='specificity','tnr'='specificity','prec'='precision','ppv'='precision',
-                'kappa'='kappa','auroc'='auroc','auc'='auroc')
-  key <- if (desired %in% names(alias)) alias[[desired]] else desired
-  alnum <- function(x) gsub('[^a-z0-9]+','', tolower(x))
-  cn_alnum <- alnum(names(PERF))
-  target_idx <- which(cn_alnum == alnum(key))[1]
-  metric_col <- if (length(target_idx)) names(PERF)[target_idx] else NA_character_
-  if (is.na(metric_col) || !(metric_col %in% names(PERF))) {
-    warning(sprintf("Metric '%s' not found; falling back to AUROC.", key))
-    metric_col <- 'auroc'
+  # Clean string "NA" text and coerce target metrics to numeric
+  metric_cols <- c("mcc", "sens", "spec", "auroc")
+  for (col in metric_cols) {
+    if (col %in% names(PERF)) {
+      PERF[get(col) == "NA", (col) := NA]
+      PERF[, (col) := as.numeric(as.character(get(col)))]
+    }
   }
 
+  # Filter out rows missing core sorting metrics
+  PERF <- PERF[!is.na(mcc) & !is.na(sens) & !is.na(spec)]
+
+  # Merge with model map files
   map_files <- list.files('.', pattern = glob2rx('model_map_*.tsv'), full.names = TRUE)
   if (!length(map_files)) stop('No model_map_*.tsv files found.')
+
   MAP <- rbindlist(lapply(map_files, fread, colClasses='character'), fill=TRUE, use.names=TRUE)
   MAP <- unique(MAP[, .(model_id, model_rds)])
 
   M <- merge(PERF, MAP, by='model_id', all.x=TRUE)
 
-  sort_cols <- c(metric_col, 'auroc', 'accuracy', 'model_id')
-  sort_cols <- sort_cols[sort_cols %in% names(M)]
-  ord <- rep(-1L, length(sort_cols))
-  if (length(sort_cols) && tail(sort_cols,1L) == 'model_id') ord[length(ord)] <- +1L
-  if (length(sort_cols)) data.table::setorderv(M, sort_cols, ord, na.last=TRUE)
+  # Apply multi-level sort: MCC (1st), SENS (2nd), SPEC (3rd) — all descending
+  setorderv(M, cols = c("mcc", "sens", "spec"), order = c(-1L, -1L, -1L), na.last = TRUE)
+
+  # Select Top 2 per variant (if present) or overall Top 2
+  if (!("auroc" %in% names(M))) M[, auroc := NA_real_]
 
   if ("variant" %in% names(M)) {
     M_s <- M[variant == "siamcat"]
     M_m <- M[variant == "mwmote"]
 
-    TOP_S <- if (nrow(M_s) > 0) M_s[1:min(2L, .N), .(model_id, auroc, model_rds)] else M[0]
-    TOP_M <- if (nrow(M_m) > 0) M_m[1:min(2L, .N), .(model_id, auroc, model_rds)] else M[0]
+    TOP_S <- if (nrow(M_s) > 0) M_s[1:min(2L, .N), .(model_id, variant, mcc, sens, spec, auroc, model_rds)] else M[0]
+    TOP_M <- if (nrow(M_m) > 0) M_m[1:min(2L, .N), .(model_id, variant, mcc, sens, spec, auroc, model_rds)] else M[0]
 
     TOP2 <- rbind(TOP_S, TOP_M, use.names = TRUE, fill = TRUE)
   } else {
-    TOP2 <- M[1:min(2L, .N), .(model_id, auroc, model_rds)]
+    TOP2 <- M[1:min(2L, .N), .(model_id, mcc, sens, spec, auroc, model_rds)]
   }
 
-  fwrite(TOP2, 'top2.tsv', sep='\\t')
+  fwrite(TOP2, 'top2.tsv', sep='\t')
   RS
 
   Rscript select_top2.R
   """
 }
+
 
 process VALIDATE_TOP3 {
   tag "validate-top3"
