@@ -313,7 +313,7 @@ process SELECT_TOP2_BY_METRIC {
     path merged_perf
     path merged_auroc
     path model_maps
-    path model_files          // NEW: rds files must be staged to check coefficients
+    path model_files         
   output:
     path "top2.tsv"
   script:
@@ -624,7 +624,7 @@ process SHAP_FROM_MODEL_IDS {
  * Workflow
  *******************************/
 workflow {
-  // Move logic inside workflow context to prevent mixing declarations
+
   def OUTDIR_ABS = file(params.outdir).toAbsolutePath().normalize().toString()
   log.info "OUTDIR_ABS = ${OUTDIR_ABS}"
 
