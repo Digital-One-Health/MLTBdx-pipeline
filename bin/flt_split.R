@@ -1,9 +1,4 @@
 #!/usr/bin/env Rscript
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager", repos="https://cloud.r-project.org")
-
-if (!requireNamespace("SIAMCAT", quietly = TRUE))
-    BiocManager::install("SIAMCAT", ask = FALSE, update = FALSE)
 
 suppressPackageStartupMessages({
     library(optparse); library(SIAMCAT)

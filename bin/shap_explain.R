@@ -1,7 +1,5 @@
 #!/usr/bin/env Rscript
 
-if(!requireNamespace("LiblineaR",quietly=TRUE))
-   install.packages("LiblineaR", repos="https://cloud.r-project.org")
 
 suppressPackageStartupMessages({
   library(optparse)

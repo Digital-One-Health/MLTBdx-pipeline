@@ -98,6 +98,15 @@ Produces SHAP summaries/metrics for the top-2 models.
 ![alt text](data/Images/modelUtility.png)
 
 # Quickstart
+
+## Create a conda env
+Navigate to the MLTBdx-pipeline folder
+
+    conda env create -f envs/r-siamcat.yml -n r-siamcat
+
+    # Activate the environment
+    conda activate r-siamcat
+
 ## update the nextflow.config file 
 Update the files to match the input files Data, models, normalization parameters. 
 Evaluation Parameters
@@ -193,8 +202,7 @@ Evaluation Parameters
 
 ## Use defaults from nextflow.config:
     nextflow run main.nf \
-     -profile conda \
-     -bg -name run_siamcat \ # update the name accordingly. 
+    -bg -name run_siamcat 
 
 ## Overide anything at runtime: 
     nextflow run main.nf \

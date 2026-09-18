@@ -1,11 +1,7 @@
 #!/usr/bin/env Rscript
 
 suppressPackageStartupMessages({
-  if (!requireNamespace("optparse", quietly = TRUE))
-    install.packages("optparse", repos="https://cloud.r-project.org")
   library(optparse)
-  if (!requireNamespace("SIAMCAT", quietly = TRUE))
-    stop("Please install SIAMCAT first (BiocManager::install('SIAMCAT'))")
   library(SIAMCAT)
 })
 
