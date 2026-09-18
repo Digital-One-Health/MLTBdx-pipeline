@@ -247,13 +247,6 @@ process SELECT_TOP3_BY_METRIC {
   if (!("auroc" %in% names(M))) M[, auroc := NA_real_]
   M[, gap := abs(sens - spec)]
 
-  # --- Degeneracy guard -----------------------------------------------
-  # Flag models whose fitted coefficients are all (near) zero outside the
-  # intercept -- this is the failure mode behind "the standard deviation
-  # is zero" / constant-prediction warnings seen at validation time. Only
-  # applies to coefficient-based models (glmnet ridge/lasso); other model
-  # types (e.g. randomForest) are left unflagged (NA) since this check
-  # doesn't apply to them.
   is_degenerate <- function(model_id, model_rds, eps = 1e-8) {
     rds_file <- basename(model_rds)
     if (!file.exists(rds_file)) {
@@ -425,11 +418,6 @@ process VALIDATE_TOP3 {
   cat "${top3_tsv}"
   echo "==============================="
 
-  # The file now has a 'lambda' column first and 'model_id' elsewhere in the
-  # header (columns are no longer fixed at position 1 / last), and the same
-  # model_id can appear multiple times -- once per lambda threshold it was
-  # selected under. Look up column positions by header name instead of
-  # assuming fixed positions, and validate each unique model_id only once.
   HEADER=\$(head -n1 "${top3_tsv}")
   MODEL_ID_COL=\$(echo "\$HEADER" | awk -F'\\t' '{for(i=1;i<=NF;i++) if(\$i=="model_id") print i}')
   MODEL_RDS_COL=\$(echo "\$HEADER" | awk -F'\\t' '{for(i=1;i<=NF;i++) if(\$i=="model_rds") print i}')
