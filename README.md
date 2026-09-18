@@ -19,6 +19,7 @@ This represents the first microbial-informed machine learning pipeline developed
 
 # Data Source
 The pipe uses data from a global systematic review, meta-analysis, and amplicon-based metagenomic meta-analysis [2].
+The files used this this particular analysis can be downloaded here **[MLTBDxFiles](https://datashare.ed.ac.uk/items/0e51e74d-4e81-4a93-9106-93400eca237e)**
 ![alt text](data/Images/MLTBdx_datasources.png)
 
 # Features
